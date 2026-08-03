@@ -60,5 +60,5 @@ test("filters to completed tasks", async ({ page }) => {
 
 test("shows the active task count", async ({ page }) => {
 	await login(page);
-	await expect(page.getByTestId("active-count")).toHaveText("2 active");
+	await expect(page.getByTestId("task-counter")).toHaveText("2 active");
 });

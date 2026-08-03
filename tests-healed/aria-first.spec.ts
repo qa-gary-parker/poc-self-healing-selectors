@@ -26,7 +26,7 @@ test("logs in and shows the dashboard", async ({ page }) => {
 test("adds a task to the list", async ({ page }) => {
 	await login(page);
 	await page.getByLabel("New task").fill("Book flights");
-	await page.getByRole("button", { name: "Add", exact: true }).click();
+	await page.getByRole("button", { name: "Add task", exact: true }).click();
 	await expect(page.getByRole("listitem").filter({ hasText: "Book flights" })).toBeVisible();
 });
 
@@ -35,7 +35,7 @@ test("completes a task", async ({ page }) => {
 	await page
 		.getByRole("listitem")
 		.filter({ hasText: "Write report" })
-		.getByRole("button", { name: "Done" })
+		.getByRole("button", { name: "Complete" })
 		.click();
 	await expect(page.getByText("1 active")).toBeVisible();
 });
