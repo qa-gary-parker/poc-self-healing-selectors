@@ -3,3 +3,7 @@ test-results/
 playwright-report/
 .claude/settings.local.json
 .playwright-mcp/
+video/audio/
+video/media/
+video/out/
+__pycache__/

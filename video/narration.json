@@ -1,0 +1,44 @@
+{
+  "S1Result": [
+    "Playwright's healer agent fixed every broken test. Ten repairs in under five minutes. None of them wrong.",
+    "One release later the healed CSS suite failed all seven tests again.",
+    "Healing put the suite back exactly as fragile as it was. Here is why."
+  ],
+  "S2Setup": [
+    "The testbed is a small task manager app in three versions. The behaviour never changes. Only the markup does.",
+    "Version two is a redesign. Every ID and class is renamed. Two buttons become icon buttons. One test ID is renamed.",
+    "Version three is a CSS modules migration. Every class is hashed. Accessible names and test IDs stay the same.",
+    "Seven scenarios are written three ways. CSS selectors. Role locators. And test IDs."
+  ],
+  "S3Drift": [
+    "Against the redesign the role locator suite passed five of seven. Test IDs passed six.",
+    "The CSS suite passed none.",
+    "Every test logs in first. Three login selectors took out all seven tests."
+  ],
+  "S4Heal": [
+    "Then Playwright's test healer agent took the ten failures. It repaired all ten in four minutes and thirty six seconds. Every repair was correct.",
+    "Every repair was in kind. A CSS selector came back as a new CSS selector.",
+    "An accessible name came back as a new accessible name. A test ID came back as a new test ID."
+  ],
+  "S5NextRelease": [
+    "Then the healed suites ran against version three.",
+    "Role locators and test IDs passed seven of seven. The healed CSS suite passed none.",
+    "The username selector had been renamed again. The repair from the last round now pointed at nothing.",
+    "A second round took three minutes and twenty three seconds. It repaired all seven again. This time to hashed class names.",
+    "The healer's own report warned that these names were likely to change on the next rebuild. It repaired them in kind anyway."
+  ],
+  "S6Count": [
+    "Count the repairs across two releases.",
+    "The CSS suite needed fourteen. Role locators needed two. Test IDs needed one.",
+    "Locator strategy decided the maintenance cost. The healer only paid it again each release."
+  ],
+  "S7Signal": [
+    "Two of those role locator failures were real changes for users. Done became Complete. Add became Add task.",
+    "A screen reader user hears that change. The healer repaired both tests and nobody decided if the change was wanted.",
+    "So use the healer to propose fixes in a pull request. Keep a person deciding why each test broke.",
+    "One caveat. I wrote the drift myself. The app is small and I tested one healer. Run it on your own suite before you trust the numbers."
+  ],
+  "S8EndCard": [
+    "Every suite and every number is in the public repo. The links are in the description."
+  ]
+}
