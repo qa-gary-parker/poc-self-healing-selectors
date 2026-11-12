@@ -87,17 +87,23 @@ class S1Result(Timed):
     def construct(self):
         title = code("Playwright test-healer agent  ·  round 1", 22, DIM).to_edge(UP, buff=0.7)
         self.add(title)
-        tests = VGroup(*[
-            RoundedRectangle(corner_radius=0.06, width=0.42, height=0.42, color=BAD, stroke_width=2).set_fill(BAD, opacity=0.25)
-            for _ in range(10)
-        ]).arrange(RIGHT, buff=0.16).move_to([0, 2.1, 0])
+        groups = VGroup()
+        for n, name in [(7, "CSS"), (2, "roles"), (1, "test IDs")]:
+            squares = VGroup(*[
+                RoundedRectangle(corner_radius=0.06, width=0.42, height=0.42, color=BAD, stroke_width=2).set_fill(BAD, opacity=0.25)
+                for _ in range(n)
+            ]).arrange(RIGHT, buff=0.12)
+            groups.add(VGroup(squares, code(name, 20, DIM).next_to(squares, DOWN, buff=0.14)))
+        groups.arrange(RIGHT, buff=0.5, aligned_edge=UP).move_to([0, 2.0, 0])
+        tests = VGroup(*[s for g in groups for s in g[0]])
+        css = groups[0][0]
         final = code("10/10 repaired", 64, GOOD).move_to([0, 0.9, 0])
         big, tick = ticker(10, "{}/10 repaired", GOOD, 64, lambda m: m.move_to(final, aligned_edge=RIGHT), run_time=1.1)
         time = code("4m 36s", 26, DIM)
         wrong = code("·  0 incorrect", 26, DIM)
         sub = VGroup(time, wrong).arrange(RIGHT, buff=0.3).next_to(final, DOWN, buff=0.3)
         self.at("fixed every broken test")
-        self.play(LaggedStart(*[FadeIn(t, scale=0.6) for t in tests], lag_ratio=0.1), run_time=0.9)
+        self.play(LaggedStart(*[FadeIn(t, scale=0.6) for t in tests], lag_ratio=0.1), FadeIn(VGroup(*[g[1] for g in groups])), run_time=0.9)
         self.at("ten repairs")
         self.play(FadeIn(big, shift=UP * 0.2), run_time=0.3)
         self.play(tick, LaggedStart(*[t.animate.set_stroke(GOOD).set_fill(GOOD, opacity=0.25) for t in tests], lag_ratio=0.1, run_time=1.1))
@@ -112,12 +118,17 @@ class S1Result(Timed):
         VGroup(head, suite, zero).arrange(RIGHT, buff=0.35).move_to([0, -0.6, 0])
         self.at("one release later")
         self.play(
-            VGroup(tests, big, sub).animate.scale(0.7).move_to([0, 1.7, 0]).set_opacity(0.45),
+            VGroup(groups, big, sub).animate.scale(0.7).move_to([0, 1.7, 0]).set_opacity(0.45),
             FadeIn(VGroup(head, suite), shift=UP * 0.2),
             run_time=0.8, rate_func=smooth,
         )
         self.at("failed all seven")
-        self.play(FadeIn(zero, scale=1.4), suite.animate.set_color(BAD), run_time=0.6)
+        self.play(
+            FadeIn(zero, scale=1.4), suite.animate.set_color(BAD),
+            LaggedStart(*[s.animate.set_stroke(BAD, opacity=1).set_fill(BAD, opacity=0.35) for s in css], lag_ratio=0.08),
+            groups[0][1].animate.set_opacity(1).set_color(BAD),
+            run_time=0.8,
+        )
 
         caption = txt("same fragility  ·  new names", 32, ACCENT).move_to([0, -2.2, 0])
         self.at("healing put the suite back")
@@ -240,10 +251,11 @@ class S4Heal(Timed):
         time = code("4m 36s", 26, DIM)
         wrong = code("·  0 incorrect", 26, DIM)
         stats = VGroup(time, wrong).arrange(RIGHT, buff=0.3).next_to(healer, DOWN, buff=0.7)
+        split = code("CSS 7 · roles 2 · test IDs 1", 16, BAD).next_to(failing, DOWN, buff=0.2)
         self.at("test healer agent")
         self.play(FadeIn(healer, scale=0.9), run_time=0.6)
         self.at("ten failures")
-        self.play(FadeIn(failing, shift=RIGHT * 0.3), grow_arrow(a1), run_time=0.8)
+        self.play(FadeIn(failing, shift=RIGHT * 0.3), FadeIn(split, shift=RIGHT * 0.3), grow_arrow(a1), run_time=0.8)
         self.at("repaired all ten")
         self.play(grow_arrow(a2), FadeIn(fixed, shift=RIGHT * 0.3), run_time=0.8)
         self.at("four minutes")
@@ -261,7 +273,7 @@ class S4Heal(Timed):
         self.at("every repair was in kind")
         self.play(
             ReplacementTransform(healer, head),
-            FadeOut(VGroup(failing, fixed, a1, a2, stats), shift=DOWN * 0.3),
+            FadeOut(VGroup(failing, split, fixed, a1, a2, stats), shift=DOWN * 0.3),
             run_time=0.8, rate_func=smooth,
         )
         for row, (left, right) in zip(rows, [("a css selector", "a new css"), ("an accessible name", "a new accessible"), ("a test id", "a new test")]):
