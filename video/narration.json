@@ -1,5 +1,6 @@
 {
   "S1Result": [
+    "If you plan to let an AI agent fix your broken tests, watch what happened to ours.",
     "Playwright's healer agent fixed every broken test. Ten repairs in under five minutes. None of them wrong.",
     "One release later the healed CSS suite failed all seven tests again.",
     "Healing put the suite back exactly as fragile as it was. Here is why."

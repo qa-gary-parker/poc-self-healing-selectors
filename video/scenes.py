@@ -87,6 +87,17 @@ class S1Result(Timed):
     def construct(self):
         title = code("Playwright test-healer agent  ·  round 1", 22, DIM).to_edge(UP, buff=0.7)
         self.add(title)
+        hook = VGroup(
+            txt("Letting an AI agent fix your broken tests?", 40),
+            code("watch what happened to ours", 26, ACCENT),
+        ).arrange(DOWN, buff=0.45).move_to([0, 0.3, 0])
+        self.play(FadeIn(hook[0], shift=UP * 0.2), run_time=0.5)
+        self.at("watch what happened")
+        self.play(FadeIn(hook[1], shift=UP * 0.15), run_time=0.4)
+        first = self.cue("fixed every broken test")
+        self.cursor = 0
+        self.wait(first - 0.6 - self.now())
+        self.play(FadeOut(hook), run_time=0.35)
         groups = VGroup()
         for n, name in [(7, "CSS"), (2, "roles"), (1, "test IDs")]:
             squares = VGroup(*[
